@@ -8,12 +8,15 @@ on:
 permissions:
   id-token: write
   contents: read
+  issues: write
 
 jobs:
   terraform:
     uses: ./.github/workflows/terraform.yml
     with:
       environment: dev
-      project_name: "rocket-project"
-      aws-assume-role-arn: "arn:aws:iam::<id_aws>:role/<role_name>"
+      project_name: "cidade-refugio-backend"
+      aws-assume-role-arn: "arn:aws:iam::164599051832:role/github-actions-deploy-role"
       aws-region: "sa-east-1"
+      aws-statefile-s3-bucket: "cidade-refugio-backend-terraform-state-164599051832"
+      aws-lock-dynamodb-table: "cidade-refugio-backend-terraform-state-lock"

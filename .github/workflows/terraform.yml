@@ -15,6 +15,13 @@ on:
       aws-region:
         type: string
         required: true
+
+      aws-statefile-s3-bucket:
+        type: string
+        required: true
+      aws-lock-dynamodb-table:
+        type: string
+        required: true
       destroy:
         type: boolean
         required: false
@@ -62,10 +69,10 @@ jobs:
         id: terraform-destroy
         run: |
           cd infra && \
-          terraform workspace select -or-create ${{ inputs.environment }} && \ 
+          terraform workspace select --or-create ${{ inputs.environment }} && \
           terraform destroy \
             -var="environment=${{ inputs.environment }}" \
-            -var-file="envs/${{ inputs.environment }}/terraform.tfvars" \ 
+            -var-file="env/${{ inputs.environment }}/terraform.tfvars" \
             -auto-approve \
             -lock=false
 
@@ -74,10 +81,10 @@ jobs:
         id: terraform-plan
         run: |
           cd infra && \
-          terraform workspace select -or-create ${{ inputs.environment }} && \
+          terraform workspace select --or-create ${{ inputs.environment }} && \
           terraform plan \
             -var="environment=${{ inputs.environment }}" \
-            -var-file="envs/${{ inputs.environment }}/terraform.tfvars" \
+            -var-file="env/${{ inputs.environment }}/terraform.tfvars" \
             -out="${{ inputs.environment }}.plan" \
             -lock=false
 
