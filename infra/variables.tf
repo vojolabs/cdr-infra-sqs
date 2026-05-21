@@ -19,3 +19,14 @@ variable "aws_region" {
 ###########################################################################################
 #
 ###########################################################################################
+variable "sqs_mensagem_bucket_name" {
+  description = "Nome da fila principal SQS"
+  type        = string
+  default     = "sqs_mensagem_bucket"
+}
+
+variable "sqs_mensagem_bucket_dlq_name" {
+  description = "Nome da DLQ da fila principal SQS"
+  type        = string
+  default     = "sqs_mensagem_bucket_dlq"
+}
